@@ -67,4 +67,8 @@ function filesystem.change_directory(path)
 end
 
 
+function filesystem.get_current_directory()
+    return current_directory
+end
+
 return filesystem
