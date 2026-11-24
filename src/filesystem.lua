@@ -29,6 +29,18 @@ local function resolve_path(path)
         return current_directory
     end
 
+    if path == ".." then
+        if current_directory == "/" then
+            return "/"
+        end
+    local parent = current_directory:match("^(.*)/[^/]+$")
+    
+    if parent == "" then 
+        return "/"
+    end
+
+    return parent
+end
     if path:sub(1, 1) == "/" then 
         return path
     end
