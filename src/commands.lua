@@ -19,6 +19,8 @@ function commands.execute(parts)
          filesystem.list(parts[2])
    elseif command == "cd" then 
        filesystem.change_directory(parts[2])
+   elseif command == "cat" then 
+       filesystem.read(parts[2])
        
     else
        print("Unknown command: " .. tostring(command))

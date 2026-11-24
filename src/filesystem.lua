@@ -23,6 +23,13 @@ local files = {
     }
 }
 
+local file_contents = {
+    ["/documents/incident_report.txt"] = "Incident Report - NoRTH-12\nStatus: Classified",
+    ["/documents/project_echo.txt"] = "PROJECT ECHO\nStatus: Unknown",
+    ["/transmissions/frequency_87.3.txt"] = "Signal detected at 87.300 Mhz.",
+    ["/recordings/operator_02.txt"] = "OPERATOR_02: Is anyone receving this?",
+}
+
 local function resolve_path(path)
 
     if path == nil or path == "" then
@@ -65,6 +72,18 @@ function filesystem.list(path)
     for _, item in ipairs(directory) do
         print(item)
     end
+end
+
+function filesystem.read(path)
+    local target = resolve_path(path)
+    local content = file_contents[target]
+
+    if content == nill then
+        print("File not found.")
+        return
+    end
+
+    print(content)
 end
 
 function filesystem.change_directory(path)
