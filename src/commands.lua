@@ -1,4 +1,6 @@
 local commands = {}
+local filesystem = require("src.filesystem")
+
 
 
 function commands.execute(parts)
@@ -13,8 +15,11 @@ function commands.execute(parts)
    print("Station: North-17")
    print("System: Operational")
    print("Archive: Incomplete")
-   else
-       print("Unknown command" .. tostring(command))
+   elseif command == "ls" then
+         filesystem.list(parts[2])
+
+    else
+       print("Unknown command: " .. tostring(command))
    end
 end
 
