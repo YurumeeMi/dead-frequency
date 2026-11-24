@@ -55,4 +55,16 @@ function filesystem.list(path)
     end
 end
 
+function filesystem.change_directory(path)
+    local target = resolve_path(path)
+
+    if files[target] == nil then
+        print("Directory not found.")
+        return
+    end
+
+    current_directory = target
+end
+
+
 return filesystem

@@ -12,12 +12,14 @@ function commands.execute(parts)
     print("status - shows station status")
     print("exit - disconnect")
    elseif command == "status" then
-   print("Station: North-17")
-   print("System: Operational")
-   print("Archive: Incomplete")
+    print("Station: North-17")
+    print("System: Operational")
+    print("Archive: Incomplete")
    elseif command == "ls" then
          filesystem.list(parts[2])
-
+   elseif command == "cd" then 
+       filesystem.change_directory(parts[2])
+       
     else
        print("Unknown command: " .. tostring(command))
    end
