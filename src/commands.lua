@@ -28,10 +28,23 @@ function commands.execute(parts)
     renderer.metadata("Archive: Incomplete")
    elseif command == "ls" then
          filesystem.list(parts[2])
+         
    elseif command == "cd" then 
-       filesystem.change_directory(parts[2])
+       if parts[2] == nil then
+        renderer.error("ERROR: Missing directory.")
+        renderer.metadata("Usage: cd <directory>")
+       else 
+        filesystem.change_directory(parts[2])
+    end
+
    elseif command == "cat" then 
-       filesystem.read(parts[2])
+       if parts[2] ==  nil  then
+        renderer.error("ERROR: Missing filename.")
+        renderer.metadata("Usage: cat <filename>")
+       else
+        filesystem.read(parts[2])
+    end
+
 
    elseif command == "clear" then
         terminal.clear()
