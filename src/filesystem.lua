@@ -1,7 +1,40 @@
 local filesystem = {}
 local renderer = require("src.renderer")
 
-local current_directory = "/"
+local function load_document(path)
+    local file = io.open(path, "r")
+
+    if file == nil then 
+        return nil
+    end
+
+    local content = file:read("*a")
+    file:close()
+
+    return content
+end
+local function parse_document(raw)
+    local metadata, body = raw:match("^(.-)\n\n(.*)$")
+
+    if not metadata then
+        return nil
+    end
+    
+    local document = {}
+
+    for line in metadata:gmatch("[^\r\n]+") do
+        local key, value = line:match("^([%w_]+):%s*(.*)$")
+
+        if key then
+            document[key:lower()] = value
+        end
+    end
+    document.content = body
+    
+    return document
+end
+
+        local current_directory = "/"
 
 local files = {
     ["/"] = {
@@ -24,19 +57,8 @@ local files = {
     }
 }
 
-local file_contents = {
-    ["/documents/incident_report.txt"] = {
-        title = "Incident Report",
-        id = "IR-001",
-        date = "2009-08-17",
-        classification = "RESTRICTED",
-        content = "An unidentified transmission was received at 02:14."
-    },
-    ["/documents/project_echo.txt"] = "PROJECT ECHO\nStatus: Unknown",
-    ["/transmissions/frequency_87.3.txt"] = "Signal detected at 87.300 Mhz.",
-    ["/recordings/operator_02.txt"] = "OPERATOR_02: Is anyone receiving this?",
-}
 
+local file_contents = {}
 local function resolve_path(path)
 
     if path == nil or path == "" then
@@ -83,18 +105,39 @@ end
 
 function filesystem.read(path)
     local target = resolve_path(path)
+   
+    
+    if target:match("^/documents/") 
+       or target:match("^/transmissions/") 
+       or target:match("^/recordings/")then
+       
+        local external_content = load_document("content" .. target)
+
+        if external_content then
+            local document = parse_document(external_content)
+
+            if document then
+                renderer.document(document)
+            else
+                print(external_content)
+            end
+
+            return
+        end
+    end
     local content = file_contents[target]
 
-    if content == nil then
-        print("File not found.")
+    if content ==  nil then
+        print("File Not Found.")
         return
     end
 
-    if type(content) == "string" then
+    if type(content) == "string" then 
         print(content)
         return
     end
 
+    
    renderer.document(content)
 end
 

@@ -1,0 +1,6 @@
+TITLE: Frequency 87.3 MHz
+ID: TX-001
+DATE: 2009-08-17
+CLASSIFICATION: RESTRICTED
+
+Signal detected at 87.300 MHz
