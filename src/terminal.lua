@@ -5,7 +5,7 @@ function terminal.print(text)
 end
 
 function terminal.prompt()
-    io.write("\n NORTH-17>")
+    io.write("\n NORTH-17> ")
     return io.read("*l")
 end
 
