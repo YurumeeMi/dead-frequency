@@ -12,7 +12,7 @@ while true do
     local input = terminal.prompt()
 
     if input == nil then 
-        print("\n Connection interrupted")
+        print("\n SHUTTING DOWN NORTH/OS")
         break
     end
 
