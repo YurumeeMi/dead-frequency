@@ -1,4 +1,5 @@
 local terminal = require("src.terminal")
+local parser= require("src.parser")
 
 print("NORTH/OS")
 print("Communications Research Terminal")
@@ -12,11 +13,16 @@ while true do
         break
     end
 
-    if input == "exit" then
+    local parts = parser.parse(input)
+    local command = parts [1]
+
+    if command == "exit" then
         print("Disconnecting...")
         break
     end
 
-    print("Unknown command: " .. input)
+   
+
+    print("Received command: " ..  tostring(command))
 
 end
