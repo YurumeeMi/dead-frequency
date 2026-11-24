@@ -8,6 +8,7 @@ local colors = {
     grey = "\27[90m",
     bold = "\27[1m",
     dim = "\27[2m",
+    white = "\27[97m"
 }
 
 function renderer.print(text, color)

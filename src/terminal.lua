@@ -6,8 +6,10 @@ function terminal.print(text)
 end
 
 function terminal.prompt()
-    io.write("\n NORTH-17:" .. filesystem.get_current_directory() .. "> ")
-    return io.read("*l")
+    io.write("\27[32mNORTH-17:" .. filesystem.get_current_directory() .. "> \27[0m")
+    local input =  io.read("*l")
+    io.write("\27[32m")
+    return input
 end
 
 function terminal.clear()

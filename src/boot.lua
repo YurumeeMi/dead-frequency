@@ -1,4 +1,5 @@
 local boot = {}
+local renderer = require("src.renderer")
 
 local function delay(seconds)
     local start = os.clock()
@@ -8,39 +9,39 @@ local function delay(seconds)
 end
 
 function boot.start()
-    print("NORTH/OS BIOS v2.09")
-    print("NORTH-17 COMMUNICATIONS SYSTEM")
-    print("-------------------------------")
+    renderer.print("NORTH/OS BIOS v2.09", "white")
+    renderer.print("NORTH-17 COMMUNICATIONS SYSTEM", "white")
+    renderer.print("-------------------------------", "white")
     delay(0.5)
 
-   print("Initializing hardware........ OK")
+   renderer.print("Initializing hardware........ OK", "white")
    delay(0.5)
 
-   print("Checking memory......... OK")
+   renderer.print("Checking memory......... OK", "white")
    delay(0.5)
 
-   print("Loading storage.......... OK")
+   renderer.print("Loading storage.......... OK", "white")
    delay(0.5)
 
-   print("Mounting archive.......... OK")
+   renderer.print("Mounting archive.......... OK", "white")
    delay(0.5)
 
-   print("Initializing radio interface.. WARNING")
+   renderer.print("Initializing radio interface.. WARNING", "white")
    delay(1)
 
-   print("-------------------------------")
+   renderer.print("-------------------------------", "white")
    delay(0.5)
 
-   print("Loading NORTH/OS kernel .......... OK")
+   renderer.print("Loading NORTH/OS kernel .......... OK", "white")
    delay(0.5)
 
-   print("Starting communications core.. OK")
+   renderer.print("Starting communications core.. OK", "white")
    delay(0.5)
 
-   print("-------------------------------")
-   print("SYSTEM READY")
-   print("NORTH-17 ARCHIVE TERMINAL")
-   print("-------------------------------")
+   renderer.print("-------------------------------", "white")
+   renderer.print("SYSTEM READY", "white")
+   renderer.print("NORTH-17 ARCHIVE TERMINAL",  "white")
+   renderer.print("-------------------------------", "white")
 
 end
 
