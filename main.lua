@@ -1,10 +1,12 @@
 local terminal = require("src.terminal")
 local parser = require("src.parser")
 local commands = require("src.commands")
+local boot = require("src.boot")
 
-print("NORTH/OS")
-print("Communications Research Terminal")
-print("--------------------------------")
+
+
+boot.start()
+
 
 while true do
     local input = terminal.prompt()
