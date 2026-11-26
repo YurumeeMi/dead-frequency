@@ -25,7 +25,7 @@ else:
         or Path.home() / ".config"
     )
     KEY_PATH = config_dir / "dead-frequency" / "key"
-    
+
 def load_key():
     KEY_PATH.parent.mkdir(
         mode=0o700,
@@ -56,6 +56,17 @@ def load_key():
 
     return key
 
+def read_key():
+    if not KEY_PATH.is_file():
+        raise FileNotFoundError("Save encryption is missing")
+
+    key = KEY_PATH.read_bytes()
+
+    if len(key) != 32:
+        raise ValueError("Invalid save encryption key")
+
+    return key
+
 def encrypt(data):
     key =  load_key()
     nonce = os.urandom(12)
@@ -70,7 +81,7 @@ def encrypt(data):
 
 
 def decrypt(data):
-    key =  load_key()
+    key =  read_key()
 
     nonce = data[:12]
     encrypted = data[12:]
