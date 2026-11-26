@@ -21,7 +21,7 @@ function commands.execute(parts, state)
     renderer.print("clear - clear terminal", "green")
     renderer.print("pwd - prints current directory", "green")
     renderer.print("mail - read internal mails",  "green")
-
+    renderer.print("echo - prints what you say on the term", "green")
     print("-----------------------------")
 
    elseif command == "status" then
@@ -50,11 +50,11 @@ function commands.execute(parts, state)
         filesystem.read(parts[2])
     end
 
-     elseif command == "mail" then
+    elseif command == "mail" then
       if parts[2] == "read" and parts[3] ~= nil then
         mail.read(tonumber(parts[3]))
 
-    
+   
     else
         renderer.title("NORTH-17 INTERNAL MAIL")
         mail.list()
@@ -68,6 +68,8 @@ function commands.execute(parts, state)
 
    elseif command == "clear" then
         terminal.clear()
+   elseif command == "echo" then
+        terminal.print(table.concat(parts, " ", 2))
     else
        renderer.error("Unknown command: " .. tostring(command))
        renderer.metadata("Type 'help' to see available commands.")
