@@ -6,7 +6,7 @@ local terminal = require("src.terminal")
 
 
 
-function commands.execute(parts)
+function commands.execute(parts, state)
     local command =  parts[1]
    
    if command == "help" then
@@ -26,9 +26,11 @@ function commands.execute(parts)
 
    elseif command == "status" then
     renderer.title("Station Status:")
-    renderer.print("Station: North-17", "green")
+    renderer.print("Station: " .. tostring(state.station), "green")
     renderer.print("System: Operational", "green")
     renderer.metadata("Archive: Incomplete")
+    renderer.metadata("Day: " .. tostring(state.day))
+    renderer.metadata("Compromised: " .. tostring(state.compromised and "YES" and "NO"))
    elseif command == "ls" then
          filesystem.list(parts[2])
 
