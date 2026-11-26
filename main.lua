@@ -2,8 +2,7 @@ local terminal = require("src.terminal")
 local parser = require("src.parser")
 local commands = require("src.commands")
 local boot = require("src.boot")
-
-
+local event = require("src.event")
 
 boot.start()
 

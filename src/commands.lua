@@ -1,6 +1,7 @@
 local commands = {}
 local renderer = require("src.renderer")
 local filesystem = require("src.filesystem")
+local mail =  require("src.mail")
 local terminal = require("src.terminal")
 
 
@@ -18,6 +19,8 @@ function commands.execute(parts)
     renderer.print("cat - Read an archive file", "green")
     renderer.print("exit - disconnect", "green")
     renderer.print("clear - clear terminal", "green")
+    renderer.print("pwd - prints current directory", "green")
+    renderer.print("mail - read internal mails",  "green")
 
     print("-----------------------------")
 
@@ -28,7 +31,7 @@ function commands.execute(parts)
     renderer.metadata("Archive: Incomplete")
    elseif command == "ls" then
          filesystem.list(parts[2])
-         
+
    elseif command == "cd" then 
        if parts[2] == nil then
         renderer.error("ERROR: Missing directory.")
@@ -45,12 +48,31 @@ function commands.execute(parts)
         filesystem.read(parts[2])
     end
 
+     elseif command == "mail" then
+      if parts[2] == "read" and parts[3] ~= nil then
+        mail.read(tonumber(parts[3]))
+
+    
+    else
+        renderer.title("NORTH-17 INTERNAL MAIL")
+        mail.list()
+      
+      end
+
+
+
+    elseif command == "pwd" then
+        renderer.print(filesystem.get_current_directory(), "green")
 
    elseif command == "clear" then
         terminal.clear()
     else
-       print("Unknown command: " .. tostring(command))
+       renderer.error("Unknown command: " .. tostring(command))
+       renderer.metadata("Type 'help' to see available commands.")
+
    end
+
+  
 end
 
 return commands

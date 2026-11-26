@@ -1,19 +1,23 @@
 local terminal = {}
 local filesystem = require("src.filesystem")
+local readline = require("readline")
 
 function terminal.print(text)
     print(text)
 end
 
 function terminal.prompt()
-    io.write("\27[32mNORTH-17:" .. filesystem.get_current_directory() .. "> \27[0m")
-    local success, input =  pcall(io.read, "*l")
+    local prompt = "\27[32mNORTH-17:" .. filesystem.get_current_directory() .. "> \27[0m"
+    local success, input =  pcall(readline.readline, prompt)
 
-    if not success then
+    if not success or input == nil then
         return nil
     end
     
-    io.write("\27[32m")
+    if input ~= "" then 
+        readline.add_history(input)
+    end
+
     return input
 end
 
