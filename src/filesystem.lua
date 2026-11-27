@@ -1,6 +1,8 @@
 local filesystem = {}
 local renderer = require("src.renderer")
+local processes = require("src.processes")
 
+local archive_pid = processes.register("archive-service", "system")
 local function load_document(path)
     local file = io.open(path, "r")
 

@@ -1,6 +1,10 @@
 local terminal = {}
 local filesystem = require("src.filesystem")
 local readline = require("readline")
+local processes =  require("src.processes")
+local shell_pid = processes.register("north-shell", "operator")
+
+local command_history = {}
 
 function terminal.print(text)
     print(text)
@@ -15,10 +19,17 @@ function terminal.prompt()
     end
     
     if input ~= "" then 
+        table.insert(command_history, input)
         readline.add_history(input)
     end
 
     return input
+end
+
+function terminal.show_history()
+    for index, command in ipairs(command_history) do
+        terminal.print(index .. " " .. command)
+    end
 end
 
 function terminal.clear()

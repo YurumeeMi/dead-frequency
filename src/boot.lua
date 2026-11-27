@@ -1,14 +1,22 @@
 local boot = {}
 local renderer = require("src.renderer")
+local processes = require("src.processes")
+
+local kernel_pid = nil
+
 
 local function delay(seconds)
     local start = os.clock()
 
-    while os.clock() -  start < seconds do
+    while os.clock() - start < seconds do
     end
 end
 
 function boot.start()
+    if not kernel_pid then 
+        kernel_pid = processes.register("rith-kernel", "root")
+    end
+
     renderer.print("NORTH/OS BIOS v2.09", "white")
     renderer.print("NORTH-17 COMMUNICATIONS SYSTEM", "white")
     renderer.print("-------------------------------", "white")
