@@ -30,6 +30,8 @@ function commands.execute(parts, state)
     renderer.print("uptime -  show system uptime", "green")
     renderer.print("ps - display registered processes", "green")
     renderer.print("ver - display NORTH/OS version", "green")
+    renderer.print("kill - termnate a process by PID", "green")
+    renderer.print("start - start a stopped process", "green")
     print("-----------------------------")
 
    elseif command == "status" then
@@ -115,7 +117,7 @@ function commands.execute(parts, state)
    elseif command == "ps" then
     terminal.print("PID  USER      STATUS   COMMAND")
     terminal.print("-------------------------------------")
-
+    
     for _, process in ipairs(processes.list()) do
         terminal.print(string.format(
             "%-5d %-10s %-11s %s",
@@ -124,6 +126,31 @@ function commands.execute(parts, state)
             process.status,
             process.name
         ))
+    end
+   elseif command == "kill" then
+    if not parts[2] then
+        renderer.metadata("Usage: kill <PID>")
+    else
+        local success, err = processes.stop(parts[2])
+        
+        if success then 
+            terminal.print("Process terminated")
+        else 
+            renderer.error(err)
+        end
+    end
+
+   elseif command == "start" then
+    if not parts[2] then
+        renderer.metadata("Usage: start <process>")
+    else 
+        local success, err = processes.start(parts[2])
+
+        if success then
+            terminal.print("Process started")
+        else 
+            renderer.error(err)
+        end
     end
 
    else

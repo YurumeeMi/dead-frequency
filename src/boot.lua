@@ -14,7 +14,7 @@ end
 
 function boot.start()
     if not kernel_pid then 
-        kernel_pid = processes.register("rith-kernel", "root")
+        kernel_pid = processes.register("rith-kernel", "root", "running", true)
     end
 
     renderer.print("NORTH/OS BIOS v2.09", "white")

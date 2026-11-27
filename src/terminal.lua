@@ -2,7 +2,7 @@ local terminal = {}
 local filesystem = require("src.filesystem")
 local readline = require("readline")
 local processes =  require("src.processes")
-local shell_pid = processes.register("north-shell", "operator")
+local shell_pid = processes.register("north-shell", "operator", "running", true)
 
 local command_history = {}
 

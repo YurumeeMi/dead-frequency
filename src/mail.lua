@@ -1,5 +1,6 @@
 local mail = {}
-
+local processes = require("src.processes")
+local mail_pid = processes.register("mail-service", "system")
 local messages = {
     {
     id = 1,
