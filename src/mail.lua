@@ -1,6 +1,27 @@
 local mail = {}
 local processes = require("src.processes")
-local mail_pid = processes.register("mail-service", "system")
+local mail_active = true
+local mail_pid = processes.register("mail-service", "system", "running", false,
+ { 
+    on_start =  function()
+        mail_active = true
+    end,
+
+    on_stop = function()
+        mail_active = false
+    end
+
+ })
+
+local function service_available()
+    if not mail_active then
+        print("Mail service offline")
+        return false
+    end
+    
+    return true
+end
+
 local messages = {
     {
     id = 1,
@@ -13,6 +34,11 @@ local messages = {
 }
 
 function mail.list()
+
+    if not service_available() then
+        return
+    end
+
     for _, message in ipairs(messages) do 
         local status = message.read and "[READ]" or "[UNREAD]"
         print(message.id .. ". " .. message.subject .. " " .. status)
@@ -20,6 +46,11 @@ function mail.list()
 end
 
 function mail.read(id)
+
+      if not service_available() then
+        return
+    end
+
     for _, message in ipairs(messages) do
         if message.id == id then
             print("FROM: " .. message.sender)
@@ -36,6 +67,11 @@ function mail.read(id)
 end
 
 function mail.receive(sender, subject, date, body)
+
+      if not service_available() then
+        return
+    end
+
     local id = #messages + 1
 
     local new_messages = {
@@ -52,6 +88,11 @@ function mail.receive(sender, subject, date, body)
 end
 
 function mail.exists(subject)
+
+      if not service_available() then
+        return
+    end
+    
     for _, message in ipairs(messages) do
         if message.subject == subject then
             return true
